@@ -45,11 +45,11 @@ RUN sed -i -e "s/AllowOverride None/AllowOverride All/g" /etc/apache2/apache2.co
 RUN a2enmod rewrite
 
 # setting the umask to 000 to allow to open files created by docker container
-#systemwide does not work in debian based docker image for some reason
-#e.g. will have no effectRUN sed -i -e "s/UMASK[[:space:]]\{1,\}022$/UMASK 000/" /etc/login.defs
-#so setting the umask for the webserver 
+# systemwide does not work in debian based docker image for some reason
+# e.g. will have no effectRUN sed -i -e "s/UMASK[[:space:]]\{1,\}022$/UMASK 000/" /etc/login.defs
+# so setting the umask for the webserver 
 RUN sed -i '2s/^/umask 000\n /' /usr/local/bin/apache2-foreground
-#and for developers that using a bash
+# and for developers that using a bash
 RUN echo umask 000 >> /root/.bashrc
 
 
